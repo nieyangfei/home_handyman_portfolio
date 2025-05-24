@@ -1,4 +1,5 @@
 import React from 'react';
+import { Pressable } from 'react-native';
 import {
     ScrollView,
     View,
@@ -23,7 +24,7 @@ const galleryImages = [
     require('../assets/gallery/image3.jpg'),
 ];
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
     return (
         <ScrollView style={styles.container}>
             {/* Welcome Section */}
@@ -45,11 +46,13 @@ export default function HomeScreen() {
                         <Text style={styles.serviceLabel}>General Repairs</Text>
                     </View>
                     <View style={styles.serviceItem}>
-                        <Image
-                            source={serviceElectrical}
-                            style={styles.serviceIcon}
-                        />
-                        <Text style={styles.serviceLabel}>Electrical</Text>
+                        <Pressable onPress={() => navigation.navigate('ElectricalService')}>
+                            <Image
+                                source={serviceElectrical}
+                                style={styles.serviceIcon}
+                            />
+                            <Text style={styles.serviceLabel}>Electrical</Text>
+                        </Pressable>
                     </View>
                     <View style={styles.serviceItem}>
                         <Image
