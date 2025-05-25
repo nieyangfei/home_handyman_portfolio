@@ -44,11 +44,10 @@ export default function HomeScreen({ navigation }) {
             </Pressable>
           </View>
           <View style={styles.serviceItem}>
-            <Image
-              source={serviceCarpentry}
-              style={styles.serviceIcon}
-            />
-            <Text style={styles.serviceLabel}>Carpentry</Text>
+            <Pressable onPress={() => navigation.navigate('Carpentry')}>
+              <Image source={serviceCarpentry} style={styles.serviceIcon} />
+              <Text style={styles.serviceLabel}>Carpentry</Text>
+            </Pressable>
           </View>
         </View>
       </View>

@@ -4,6 +4,7 @@ import CallToActionScreen from './screens/CallToActionScreen';
 import ElectricalService from './screens/ElectricalServiceScreen';
 import HomeScreen from './screens/HomeScreen';
 import WhyMeScreen from './screens/WhyMeScreen';
+import CarpentryScreen from './screens/CarpentryScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,8 @@ const MyStack = () => {
         <Stack.Screen name="ElectricalService" component={ElectricalService} options={{ title: 'Electrical Services' }} />
         <Stack.Screen name="WhyMe" component={WhyMeScreen} options={{ title: 'Why?' }} />
         <Stack.Screen name="CallToAction" component={CallToActionScreen} options={{ title: "Want me to work?" }} />
+        <Stack.Screen name="Carpentry" component={CarpentryScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
