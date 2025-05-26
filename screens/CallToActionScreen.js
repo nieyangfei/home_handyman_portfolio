@@ -9,6 +9,7 @@ import {
   Dimensions
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import PageHeader from '../components/PageHeader';
 
 const { width } = Dimensions.get('window');
 
@@ -43,10 +44,7 @@ export default function CallToActionScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Let's Work Together</Text>
-        <Text style={styles.headerSubtitle}>Ready to Start Your Project?</Text>
-      </View>
+      <PageHeader title={"Let's Work Together"} description={'Ready to Start Your Project?'} />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.heroSection}>

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
+import PageHeader from '../components/PageHeader';
 
 const { width } = Dimensions.get('window');
 
@@ -87,12 +88,7 @@ export default function WhyMeScreen({ navigation }) {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Why Choose Me?</Text>
-        <Text style={styles.headerSubtitle}>
-          What sets me apart from the rest
-        </Text>
-      </View>
+      <PageHeader title={'Why Choose Me?'} description={'What sets me apart from the rest'} />
 
       <View style={styles.valuePropsSection}>
         <View style={styles.valuePropsGrid}>

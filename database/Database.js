@@ -129,6 +129,54 @@ const clearCart = async () => {
     }
 };
 
+// Static portfolio data
+export const getPortfolioItems = () => [
+    {
+        title: "Kitchen Cabinet Restoration",
+        before_image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400",
+        after_image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
+        skills_used: "Carpentry, Painting",
+        description: "Complete cabinet makeover with new hardware and finish",
+    },
+    {
+        title: "Bathroom Lighting Upgrade",
+        before_image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400",
+        after_image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?w=400",
+        skills_used: "Electrical",
+        description: "Modern LED lighting installation with dimmer controls",
+    },
+    {
+        title: "Deck Refinishing",
+        before_image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400",
+        after_image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400",
+        skills_used: "Carpentry, Custom Fixes",
+        description: "Weather-damaged deck restored to like-new condition",
+    },
+];
+
+export const getTestimonials = () => [
+    {
+        name: "Jane Smith",
+        quote: "John was prompt, professional, and did an outstanding job!"
+    },
+    {
+        name: "Mike Johnson",
+        quote: "Excellent attention to detail and really great communication!"
+    },
+    {
+        name: "Ava Lee",
+        quote: "Transformed our space beautifully — will definitely hire again."
+    },
+    {
+        name: "Carlos Ramirez",
+        quote: "Best handyman experience I’ve had in years. Highly recommend!"
+    },
+    {
+        name: "Priya Patel",
+        quote: "Clean, quick, and super reliable. Thank you!"
+    },
+];
+
 export default {
     initializeDatabase,
     getServices,
@@ -136,4 +184,6 @@ export default {
     getCartItems,
     removeFromCart,
     clearCart,
+    getPortfolioItems,
+    getTestimonials
 };
