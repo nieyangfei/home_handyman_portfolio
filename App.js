@@ -15,6 +15,8 @@ import PlumbingScreen from './screens/PlumbingScreen';
 import GeneralRepairsScreen from './screens/GeneralRepairsScreen';
 import ServiceRequestScreen from './screens/ServiceRequestScreen';
 import CallToActionScreen from './screens/CallToActionScreen';
+import { useEffect } from 'react';
+import Database from './Database';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -124,7 +126,7 @@ const MyTabs = () => {
                     borderTopColor: '#E5E5EA',
                     paddingBottom: 5,
                     paddingTop: 5,
-                    height: 85, // Increased height to accommodate safe area
+                    height: 85,
                 },
                 tabBarLabelStyle: {
                     fontSize: 12,
@@ -142,6 +144,20 @@ const MyTabs = () => {
 };
 
 export default function App() {
+    useEffect(() => {
+        const initializeApp = async () => {
+            try {
+                console.log('Resetting and initializing database...');
+                await Database.resetDatabase();
+                console.log('Database reset and initialized successfully!');
+            } catch (error) {
+                console.error('Database initialization failed:', error);
+            }
+        };
+
+        initializeApp();
+    }, []);
+
     return (
         <SafeAreaProvider>
             <NavigationContainer>

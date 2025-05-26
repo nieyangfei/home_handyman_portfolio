@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 
-// Open database using the new API (SDK 50+)
+// Open database
 const db = SQLite.openDatabaseSync
     ? SQLite.openDatabaseSync('HandymanPortfolio.db')
     : SQLite.openDatabase('HandymanPortfolio.db');
@@ -18,7 +18,7 @@ const initializeDatabase = async () => {
             );
         `);
 
-        // Create ServiceRequests table (Enhanced)
+        // Create ServiceRequests table
         await db.execAsync(`
             CREATE TABLE IF NOT EXISTS ServiceRequests (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -209,46 +209,16 @@ const deleteServiceRequest = async (requestId) => {
     }
 };
 
-// Legacy methods for backward compatibility
-const addToCart = async (
-    serviceId,
-    phoneNumber,
-    billingAddress,
-    shippingAddress,
-) => {
-    console.warn('addToCart is deprecated. Use addServiceRequest instead.');
-    // For backward compatibility, convert to new format
-    await addServiceRequest({
-        serviceId,
-        serviceType: 'Legacy Service',
-        name: 'Unknown',
-        phone: phoneNumber,
-        address: billingAddress,
-        description: 'Legacy cart item',
-        status: 'pending',
-        createdAt: new Date().toISOString(),
-    });
-};
-
-const getCartItems = async () => {
-    console.warn('getCartItems is deprecated. Use getServiceRequests instead.');
-    return await getServiceRequests();
-};
-
-const removeFromCart = async (itemId) => {
-    console.warn(
-        'removeFromCart is deprecated. Use deleteServiceRequest instead.',
-    );
-    return await deleteServiceRequest(itemId);
-};
-
-const clearCart = async () => {
-    console.warn('clearCart is deprecated.');
+const resetDatabase = async () => {
     try {
-        await db.runAsync('DELETE FROM ServiceRequests;');
-        console.log('All service requests cleared');
+        console.log('Resetting database...');
+        await db.execAsync('DROP TABLE IF EXISTS ServiceRequests;');
+        await db.execAsync('DROP TABLE IF EXISTS Services;');
+        console.log('Old tables dropped');
+
+        await initializeDatabase();
     } catch (error) {
-        console.error('Error clearing service requests:', error);
+        console.error('Reset error:', error);
         throw error;
     }
 };
@@ -260,9 +230,5 @@ export default {
     getServiceRequests,
     updateServiceRequestStatus,
     deleteServiceRequest,
-    // Legacy methods for backward compatibility
-    addToCart,
-    getCartItems,
-    removeFromCart,
-    clearCart,
+    resetDatabase,
 };

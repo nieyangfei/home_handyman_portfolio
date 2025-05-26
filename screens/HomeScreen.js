@@ -14,7 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-// Static image imports
+// Images imports
 const heroImage = require('../assets/hero-background.jpg');
 const serviceElectrical = require('../assets/services/electrical.jpg');
 const serviceCarpentry = require('../assets/services/carpentry.png');
@@ -499,7 +499,6 @@ const styles = StyleSheet.create({
     featureText: {
         flex: 1,
     },
-    // Fixed: Separate styles for feature highlight titles vs why choose me titles
     featureTitle: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -533,7 +532,6 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 2,
     },
-    // Fixed: Proper styles for Why Choose Me section
     featureItemTitle: {
         fontSize: 14,
         fontWeight: '600',

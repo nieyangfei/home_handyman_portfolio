@@ -434,14 +434,14 @@ const styles = StyleSheet.create({
     },
     categoryButton: {
         paddingHorizontal: 16,
-        paddingVertical: 6, // Reduced from 8 to 6
-        borderRadius: 16, // Slightly smaller radius to match
+        paddingVertical: 6,
+        borderRadius: 16,
         backgroundColor: '#fff',
         borderWidth: 1,
         borderColor: '#ddd',
-        minHeight: 32, // Set a fixed minimum height
-        justifyContent: 'center', // Center the text vertically
-        alignItems: 'center', // Center the text horizontally
+        minHeight: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     categoryButtonActive: {
         backgroundColor: '#FF6B35',
@@ -451,8 +451,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         fontWeight: '500',
-        textAlign: 'center', // Ensure text is centered
-        lineHeight: 16, // Control line height to prevent extra space
+        textAlign: 'center',
+        lineHeight: 16,
     },
     categoryButtonTextActive: {
         color: '#fff',

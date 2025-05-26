@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     },
     form: {
         padding: 20,
-        paddingBottom: 100, // Extra padding for bottom tab bar
+        paddingBottom: 100,
     },
     section: {
         marginBottom: 30,
