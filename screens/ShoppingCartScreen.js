@@ -9,8 +9,8 @@ import {
     Alert,
     Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import Database from '../Database';
+import Database from '../database/Database';
+import PageHeader from '../components/PageHeader';
 
 const { width } = Dimensions.get('window');
 
@@ -89,10 +89,7 @@ export default function ShoppingCartScreen({ navigation }) {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerTitle}>Service Request Cart</Text>
-                <Text style={styles.headerSubtitle}>Select services and submit your request</Text>
-            </View>
+            <PageHeader title={'Service Request'} description={'Select services and submit your request'} />
 
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Available Services</Text>

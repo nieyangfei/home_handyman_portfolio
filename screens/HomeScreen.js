@@ -1,8 +1,9 @@
-import React, { useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import {
   ScrollView, View, Text, ImageBackground, Image, StyleSheet,
   Dimensions, TouchableOpacity, Pressable, Alert
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
@@ -35,9 +36,17 @@ export default function HomeScreen({ navigation }) {
   useLayoutEffect(() => {
     nav.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={handleLogout} style={{ marginRight: 15 }}>
-          <Text style={{ color: '#00796b', fontWeight: 'bold' }}>Logout</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {/* Logout Icon */}
+          <TouchableOpacity onPress={handleLogout} style={{ marginRight: 15 }}>
+            <Ionicons name="log-out-outline" size={24} color="#FF6B35" />
+          </TouchableOpacity>
+
+          {/* Cart Icon */}
+          <TouchableOpacity onPress={() => navigation.navigate('ShoppingCart')}>
+            <Ionicons name="cart-outline" size={24} color="#FF6B35" />
+          </TouchableOpacity>
+        </View>
       ),
     });
   }, [nav]);
@@ -89,14 +98,18 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* Gallery */}
-      <View style={styles.gallerySection}>
-        <Text style={styles.sectionTitle}>Gallery</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.galleryScroll}>
-          {galleryImages.map((img, index) => (
-            <Image key={index} source={img} style={styles.galleryImage} />
-          ))}
-        </ScrollView>
+      {/* Gallery (My Work) */}
+      <View style={styles.areaSection}>
+        <Text style={styles.sectionTitle}>Check out my work</Text>
+        <Text style={styles.areaText}>
+          My craft in action.
+        </Text>
+        <TouchableOpacity
+          style={styles.whyButton}
+          onPress={() => navigation.navigate('CraftInActionScreen')}
+        >
+          <Text style={styles.whyButtonText}>Take a look</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Testimonials */}
@@ -106,6 +119,12 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.testimonialText}>
             "John was prompt, professional, and did an outstanding job!" — Jane Smith
           </Text>
+          <TouchableOpacity
+            style={styles.whyButton}
+            onPress={() => navigation.navigate('Testimonials')}
+          >
+            <Text style={styles.whyButtonText}>See All Testimonials</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
