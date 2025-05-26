@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
@@ -284,46 +285,52 @@ export default function SkillsScreen({ navigation }) {
     };
 
     return (
-        <ScrollView
-            style={styles.container}
-            showsVerticalScrollIndicator={false}
-        >
-            <View style={styles.header}>
-                <Text style={styles.headerTitle}>My Skills & Expertise</Text>
-                <Text style={styles.headerSubtitle}>
-                    Over a decade of professional experience across multiple
-                    trades
-                </Text>
-            </View>
-
-            <View style={styles.content}>
-                {skillsData.map((skill) => (
-                    <SkillCard key={skill.id} skill={skill} />
-                ))}
-            </View>
-
-            <View style={styles.footer}>
-                <View style={styles.footerCard}>
-                    <Ionicons name="star" size={32} color="#FFD700" />
-                    <Text style={styles.footerTitle}>Quality Guaranteed</Text>
-                    <Text style={styles.footerText}>
-                        Every project is backed by years of experience, proper
-                        licensing, and a commitment to excellence. Your
-                        satisfaction is guaranteed.
+        <SafeAreaView style={styles.container} edges={['bottom']}>
+            <ScrollView
+                style={styles.container}
+                showsVerticalScrollIndicator={false}
+            >
+                <View style={styles.header}>
+                    <Text style={styles.headerTitle}>
+                        My Skills & Expertise
                     </Text>
-                    <TouchableOpacity
-                        style={styles.footerButton}
-                        onPress={() => navigation.navigate('CallToAction')}
-                    >
-                        <Text style={styles.footerButtonText}>
-                            Get a Free Consultation
-                        </Text>
-                    </TouchableOpacity>
+                    <Text style={styles.headerSubtitle}>
+                        Over a decade of professional experience across multiple
+                        trades
+                    </Text>
                 </View>
-            </View>
 
-            <View style={{ height: 100 }} />
-        </ScrollView>
+                <View style={styles.content}>
+                    {skillsData.map((skill) => (
+                        <SkillCard key={skill.id} skill={skill} />
+                    ))}
+                </View>
+
+                <View style={styles.footer}>
+                    <View style={styles.footerCard}>
+                        <Ionicons name="star" size={32} color="#FFD700" />
+                        <Text style={styles.footerTitle}>
+                            Quality Guaranteed
+                        </Text>
+                        <Text style={styles.footerText}>
+                            Every project is backed by years of experience,
+                            proper licensing, and a commitment to excellence.
+                            Your satisfaction is guaranteed.
+                        </Text>
+                        <TouchableOpacity
+                            style={styles.footerButton}
+                            onPress={() => navigation.navigate('CallToAction')}
+                        >
+                            <Text style={styles.footerButtonText}>
+                                Get a Free Consultation
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View style={{ height: 100 }} />
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 

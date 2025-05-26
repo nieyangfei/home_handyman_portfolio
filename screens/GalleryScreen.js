@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
@@ -349,7 +350,7 @@ export default function GalleryScreen({ navigation }) {
     );
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container} edges={['bottom']}>
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>Before & After Gallery</Text>
                 <Text style={styles.headerSubtitle}>
@@ -398,7 +399,7 @@ export default function GalleryScreen({ navigation }) {
             </ScrollView>
 
             <ProjectModal />
-        </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({

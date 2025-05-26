@@ -10,6 +10,7 @@ import {
     Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProfileScreen({ navigation }) {
     const profileData = {
@@ -75,189 +76,192 @@ export default function ProfileScreen({ navigation }) {
     );
 
     return (
-        <ScrollView
-            style={styles.container}
-            showsVerticalScrollIndicator={false}
-        >
-            {/* Profile Header */}
-            <View style={styles.header}>
-                <View style={styles.profileImageContainer}>
-                    <Image
-                        source={require('../assets/profile-placeholder.jpg')}
-                        style={styles.profileImage}
-                    />
-                    <View style={styles.statusBadge}>
-                        <Text style={styles.statusText}>Available</Text>
-                    </View>
-                </View>
-
-                <Text style={styles.profileName}>{profileData.name}</Text>
-                <Text style={styles.profileTitle}>{profileData.title}</Text>
-
-                <View style={styles.statsContainer}>
-                    <View style={styles.statItem}>
-                        <Text style={styles.statNumber}>
-                            {profileData.rating}
-                        </Text>
-                        <View style={styles.starsContainer}>
-                            {[...Array(5)].map((_, i) => (
-                                <Ionicons
-                                    key={i}
-                                    name="star"
-                                    size={12}
-                                    color={
-                                        i < Math.floor(profileData.rating)
-                                            ? '#FFD700'
-                                            : '#E5E5EA'
-                                    }
-                                />
-                            ))}
+        <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+            <ScrollView
+                style={styles.container}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* Profile Header */}
+                <View style={styles.header}>
+                    <View style={styles.profileImageContainer}>
+                        <Image
+                            source={require('../assets/profile-placeholder.jpg')}
+                            style={styles.profileImage}
+                        />
+                        <View style={styles.statusBadge}>
+                            <Text style={styles.statusText}>Available</Text>
                         </View>
                     </View>
-                    <View style={styles.statDivider} />
-                    <View style={styles.statItem}>
-                        <Text style={styles.statNumber}>
-                            {profileData.completedJobs}+
-                        </Text>
-                        <Text style={styles.statLabel}>Jobs Completed</Text>
-                    </View>
-                    <View style={styles.statDivider} />
-                    <View style={styles.statItem}>
-                        <Text style={styles.statNumber}>
-                            {profileData.experience}
-                        </Text>
-                        <Text style={styles.statLabel}>Experience</Text>
-                    </View>
-                </View>
 
-                <View style={styles.contactButtons}>
-                    <TouchableOpacity
-                        style={styles.contactButton}
-                        onPress={handleCall}
-                    >
-                        <Ionicons name="call" size={20} color="#fff" />
-                        <Text style={styles.contactButtonText}>Call</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.contactButton, styles.emailButton]}
-                        onPress={handleEmail}
-                    >
-                        <Ionicons name="mail" size={20} color="#FF6B35" />
-                        <Text
-                            style={[
-                                styles.contactButtonText,
-                                styles.emailButtonText,
-                            ]}
-                        >
-                            Email
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                    <Text style={styles.profileName}>{profileData.name}</Text>
+                    <Text style={styles.profileTitle}>{profileData.title}</Text>
 
-            {/* Contact Information */}
-            <ProfileSection title="Contact Information">
-                <InfoRow
-                    icon="call-outline"
-                    label="Phone"
-                    value={profileData.phone}
-                    onPress={handleCall}
-                    showArrow
-                />
-                <InfoRow
-                    icon="mail-outline"
-                    label="Email"
-                    value={profileData.email}
-                    onPress={handleEmail}
-                    showArrow
-                />
-                <InfoRow
-                    icon="location-outline"
-                    label="Service Area"
-                    value={profileData.location}
-                />
-                <InfoRow
-                    icon="globe-outline"
-                    label="Website"
-                    value="skilledhands.com"
-                    onPress={handleWebsite}
-                    showArrow
-                />
-            </ProfileSection>
-
-            {/* About */}
-            <ProfileSection title="About">
-                <TouchableOpacity
-                    style={styles.bioContainer}
-                    onPress={showFullBio}
-                >
-                    <Text style={styles.bioText}>
-                        Professional handyman with over 12 years of experience
-                        serving the Toronto area. Specializing in electrical
-                        work, custom carpentry, and home repairs...
-                    </Text>
-                    <Text style={styles.readMore}>Read More</Text>
-                </TouchableOpacity>
-            </ProfileSection>
-
-            {/* Certifications & Licenses */}
-            <ProfileSection title="Certifications & Licenses">
-                <View style={styles.badgesContainer}>
-                    {profileData.certifications.map((cert, index) => (
-                        <View key={index} style={styles.certBadge}>
-                            <Ionicons
-                                name="shield-checkmark"
-                                size={16}
-                                color="#10B981"
-                            />
-                            <Text style={styles.certText}>{cert}</Text>
-                        </View>
-                    ))}
-                </View>
-            </ProfileSection>
-
-            {/* Service Specialties */}
-            <ProfileSection title="Service Specialties">
-                <View style={styles.specialtiesContainer}>
-                    {profileData.specialties.map((specialty, index) => (
-                        <View key={index} style={styles.specialtyTag}>
-                            <Text style={styles.specialtyText}>
-                                {specialty}
+                    <View style={styles.statsContainer}>
+                        <View style={styles.statItem}>
+                            <Text style={styles.statNumber}>
+                                {profileData.rating}
                             </Text>
+                            <View style={styles.starsContainer}>
+                                {[...Array(5)].map((_, i) => (
+                                    <Ionicons
+                                        key={i}
+                                        name="star"
+                                        size={12}
+                                        color={
+                                            i < Math.floor(profileData.rating)
+                                                ? '#FFD700'
+                                                : '#E5E5EA'
+                                        }
+                                    />
+                                ))}
+                            </View>
                         </View>
-                    ))}
-                </View>
-            </ProfileSection>
+                        <View style={styles.statDivider} />
+                        <View style={styles.statItem}>
+                            <Text style={styles.statNumber}>
+                                {profileData.completedJobs}+
+                            </Text>
+                            <Text style={styles.statLabel}>Jobs Completed</Text>
+                        </View>
+                        <View style={styles.statDivider} />
+                        <View style={styles.statItem}>
+                            <Text style={styles.statNumber}>
+                                {profileData.experience}
+                            </Text>
+                            <Text style={styles.statLabel}>Experience</Text>
+                        </View>
+                    </View>
 
-            {/* Service Hours */}
-            <ProfileSection title="Service Hours">
-                <View style={styles.hoursContainer}>
-                    <InfoRow
-                        icon="time-outline"
-                        label="Monday - Friday"
-                        value="8:00 AM - 6:00 PM"
-                    />
-                    <InfoRow
-                        icon="time-outline"
-                        label="Saturday"
-                        value="9:00 AM - 4:00 PM"
-                    />
-                    <InfoRow
-                        icon="time-outline"
-                        label="Sunday"
-                        value="Emergency Only"
-                    />
-                    <InfoRow
-                        icon="flash-outline"
-                        label="Emergency Service"
-                        value="24/7 Available"
-                    />
+                    <View style={styles.contactButtons}>
+                        <TouchableOpacity
+                            style={styles.contactButton}
+                            onPress={handleCall}
+                        >
+                            <Ionicons name="call" size={20} color="#fff" />
+                            <Text style={styles.contactButtonText}>Call</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.contactButton, styles.emailButton]}
+                            onPress={handleEmail}
+                        >
+                            <Ionicons name="mail" size={20} color="#FF6B35" />
+                            <Text
+                                style={[
+                                    styles.contactButtonText,
+                                    styles.emailButtonText,
+                                ]}
+                            >
+                                Email
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </ProfileSection>
 
-            {/* Bottom Spacing */}
-            <View style={{ height: 100 }} />
-        </ScrollView>
+                {/* Contact Information */}
+                <ProfileSection title="Contact Information">
+                    <InfoRow
+                        icon="call-outline"
+                        label="Phone"
+                        value={profileData.phone}
+                        onPress={handleCall}
+                        showArrow
+                    />
+                    <InfoRow
+                        icon="mail-outline"
+                        label="Email"
+                        value={profileData.email}
+                        onPress={handleEmail}
+                        showArrow
+                    />
+                    <InfoRow
+                        icon="location-outline"
+                        label="Service Area"
+                        value={profileData.location}
+                    />
+                    <InfoRow
+                        icon="globe-outline"
+                        label="Website"
+                        value="skilledhands.com"
+                        onPress={handleWebsite}
+                        showArrow
+                    />
+                </ProfileSection>
+
+                {/* About */}
+                <ProfileSection title="About">
+                    <TouchableOpacity
+                        style={styles.bioContainer}
+                        onPress={showFullBio}
+                    >
+                        <Text style={styles.bioText}>
+                            Professional handyman with over 12 years of
+                            experience serving the Toronto area. Specializing in
+                            electrical work, custom carpentry, and home
+                            repairs...
+                        </Text>
+                        <Text style={styles.readMore}>Read More</Text>
+                    </TouchableOpacity>
+                </ProfileSection>
+
+                {/* Certifications & Licenses */}
+                <ProfileSection title="Certifications & Licenses">
+                    <View style={styles.badgesContainer}>
+                        {profileData.certifications.map((cert, index) => (
+                            <View key={index} style={styles.certBadge}>
+                                <Ionicons
+                                    name="shield-checkmark"
+                                    size={16}
+                                    color="#10B981"
+                                />
+                                <Text style={styles.certText}>{cert}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </ProfileSection>
+
+                {/* Service Specialties */}
+                <ProfileSection title="Service Specialties">
+                    <View style={styles.specialtiesContainer}>
+                        {profileData.specialties.map((specialty, index) => (
+                            <View key={index} style={styles.specialtyTag}>
+                                <Text style={styles.specialtyText}>
+                                    {specialty}
+                                </Text>
+                            </View>
+                        ))}
+                    </View>
+                </ProfileSection>
+
+                {/* Service Hours */}
+                <ProfileSection title="Service Hours">
+                    <View style={styles.hoursContainer}>
+                        <InfoRow
+                            icon="time-outline"
+                            label="Monday - Friday"
+                            value="8:00 AM - 6:00 PM"
+                        />
+                        <InfoRow
+                            icon="time-outline"
+                            label="Saturday"
+                            value="9:00 AM - 4:00 PM"
+                        />
+                        <InfoRow
+                            icon="time-outline"
+                            label="Sunday"
+                            value="Emergency Only"
+                        />
+                        <InfoRow
+                            icon="flash-outline"
+                            label="Emergency Service"
+                            value="24/7 Available"
+                        />
+                    </View>
+                </ProfileSection>
+
+                {/* Bottom Spacing */}
+                <View style={{ height: 100 }} />
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 

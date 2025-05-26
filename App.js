@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from './screens/HomeScreen';
 import ServicesScreen from './screens/ServicesScreen';
 import InquiriesScreen from './screens/InquiriesScreen';
@@ -96,56 +97,56 @@ const HomeStack = () => {
 
 const MyTabs = () => {
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-                        if (route.name === 'Home') {
-                            iconName = focused ? 'home' : 'home-outline';
-                        } else if (route.name === 'Services') {
-                            iconName = focused
-                                ? 'construct'
-                                : 'construct-outline';
-                        } else if (route.name === 'Inquiries') {
-                            iconName = focused
-                                ? 'document-text'
-                                : 'document-text-outline';
-                        } else if (route.name === 'Profile') {
-                            iconName = focused ? 'person' : 'person-outline';
-                        }
-                        return (
-                            <Ionicons
-                                name={iconName}
-                                size={size}
-                                color={color}
-                            />
-                        );
-                    },
-                    tabBarActiveTintColor: '#FF6B35',
-                    tabBarInactiveTintColor: '#8E8E93',
-                    tabBarStyle: {
-                        backgroundColor: '#fff',
-                        borderTopWidth: 1,
-                        borderTopColor: '#E5E5EA',
-                        paddingBottom: 5,
-                        paddingTop: 5,
-                        height: 60,
-                    },
-                    tabBarLabelStyle: {
-                        fontSize: 12,
-                        fontWeight: '500',
-                    },
-                    headerShown: false,
-                })}
-            >
-                <Tab.Screen name="Home" component={HomeStack} />
-                <Tab.Screen name="Services" component={ServicesStack} />
-                <Tab.Screen name="Inquiries" component={InquiriesScreen} />
-                <Tab.Screen name="Profile" component={ProfileScreen} />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    if (route.name === 'Home') {
+                        iconName = focused ? 'home' : 'home-outline';
+                    } else if (route.name === 'Services') {
+                        iconName = focused ? 'construct' : 'construct-outline';
+                    } else if (route.name === 'Inquiries') {
+                        iconName = focused
+                            ? 'document-text'
+                            : 'document-text-outline';
+                    } else if (route.name === 'Profile') {
+                        iconName = focused ? 'person' : 'person-outline';
+                    }
+                    return (
+                        <Ionicons name={iconName} size={size} color={color} />
+                    );
+                },
+                tabBarActiveTintColor: '#FF6B35',
+                tabBarInactiveTintColor: '#8E8E93',
+                tabBarStyle: {
+                    backgroundColor: '#fff',
+                    borderTopWidth: 1,
+                    borderTopColor: '#E5E5EA',
+                    paddingBottom: 5,
+                    paddingTop: 5,
+                    height: 85, // Increased height to accommodate safe area
+                },
+                tabBarLabelStyle: {
+                    fontSize: 12,
+                    fontWeight: '500',
+                },
+                headerShown: false,
+            })}
+        >
+            <Tab.Screen name="Home" component={HomeStack} />
+            <Tab.Screen name="Services" component={ServicesStack} />
+            <Tab.Screen name="Inquiries" component={InquiriesScreen} />
+            <Tab.Screen name="Profile" component={ProfileScreen} />
+        </Tab.Navigator>
     );
 };
 
-export default MyTabs;
+export default function App() {
+    return (
+        <SafeAreaProvider>
+            <NavigationContainer>
+                <MyTabs />
+            </NavigationContainer>
+        </SafeAreaProvider>
+    );
+}

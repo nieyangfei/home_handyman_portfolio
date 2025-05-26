@@ -10,6 +10,7 @@ import {
 import { useState, useEffect, useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Database from '../Database';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function InquiriesScreen() {
     const [inquiries, setInquiries] = useState([]);
@@ -168,7 +169,7 @@ export default function InquiriesScreen() {
     );
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>Service Requests</Text>
                 <Text style={styles.headerSubtitle}>
@@ -190,7 +191,7 @@ export default function InquiriesScreen() {
                 ListEmptyComponent={renderEmptyState}
                 showsVerticalScrollIndicator={false}
             />
-        </View>
+        </SafeAreaView>
     );
 }
 
