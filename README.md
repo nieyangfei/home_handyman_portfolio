@@ -2,7 +2,7 @@
 
 A modern React Native mobile application designed as a Portfolio for a Professional Home Handyman to showcase their services, manage client inquiries, and build their business presence.
 
-Project available at [GitHub](https://github.com/nieyangfei/home_handyman_portfolio/tree/revamp-app) under the `revamp-app` branch.
+Project available at [https://github.com/nieyangfei/home_handyman_portfolio/tree/revamp-app](https://github.com/nieyangfei/home_handyman_portfolio/tree/revamp-app) under the `revamp-app` branch.
 
 ## Group 5 Members
 
