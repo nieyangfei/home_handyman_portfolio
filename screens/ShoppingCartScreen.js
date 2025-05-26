@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, Alert, Dimensions, TouchableOpacitys } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, Alert, Dimensions, TouchableOpacity } from 'react-native';
 import Database from '../database/Database';
 import PageHeader from '../components/PageHeader';
 import ServiceCard from '../components/ServiceCard';

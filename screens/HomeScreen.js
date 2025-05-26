@@ -36,20 +36,21 @@ export default function HomeScreen({ navigation }) {
   useLayoutEffect(() => {
     nav.setOptions({
       headerRight: () => (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {/* Logout Icon */}
-          <TouchableOpacity onPress={handleLogout} style={{ marginRight: 15 }}>
-            <Ionicons name="log-out-outline" size={24} color="#FF6B35" />
-          </TouchableOpacity>
-
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', width: 100 }}>
           {/* Cart Icon */}
           <TouchableOpacity onPress={() => navigation.navigate('ShoppingCart')}>
             <Ionicons name="cart-outline" size={24} color="#FF6B35" />
+          </TouchableOpacity>
+
+          {/* Logout Icon */}
+          <TouchableOpacity onPress={handleLogout} style={{ marginRight: 15 }}>
+            <Ionicons name="log-out-outline" size={24} color="#FF6B35" />
           </TouchableOpacity>
         </View>
       ),
     });
   }, [nav]);
+
 
   return (
     <ScrollView style={styles.container}>
