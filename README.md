@@ -74,7 +74,7 @@ The app is designed to be intuitive – simply **tap around** to explore the dif
 
     ```bash
     git clone https://github.com/yourusername/home-handyman-portfolio.git
-    cd skilled-hands-app
+    cd home-handyman-portfolio
     npm install
     ```
 
