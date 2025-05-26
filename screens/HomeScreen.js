@@ -118,7 +118,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.sectionTitle}>Testimonials</Text>
         <View style={styles.testimonialItem}>
           <Text style={styles.testimonialText}>
-            "John was prompt, professional, and did an outstanding job!" — Jane Smith
+            Check out what client says about my work!
           </Text>
           <TouchableOpacity
             style={styles.whyButton}
