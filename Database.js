@@ -1,56 +1,100 @@
 import * as SQLite from 'expo-sqlite';
 
 // Open database using the new API (SDK 50+)
-const db = SQLite.openDatabaseSync ? SQLite.openDatabaseSync('HandymanPortfolio.db') : SQLite.openDatabase('HandymanPortfolio.db');
+const db = SQLite.openDatabaseSync
+    ? SQLite.openDatabaseSync('HandymanPortfolio.db')
+    : SQLite.openDatabase('HandymanPortfolio.db');
 
 const initializeDatabase = async () => {
     try {
         // Create Services table
         await db.execAsync(`
-      PRAGMA journal_mode = WAL;
-      CREATE TABLE IF NOT EXISTS Services (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT,
-        price REAL
-      );
-    `);
+            PRAGMA journal_mode = WAL;
+            CREATE TABLE IF NOT EXISTS Services (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                description TEXT,
+                price REAL
+            );
+        `);
 
-        // Create ServiceRequests table
+        // Create ServiceRequests table (Enhanced)
         await db.execAsync(`
-      CREATE TABLE IF NOT EXISTS ServiceRequests (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        serviceId INTEGER,
-        phoneNumber TEXT,
-        billingAddress TEXT,
-        shippingAddress TEXT,
-        totalPrice REAL,
-        createdAt TEXT,
-        FOREIGN KEY (serviceId) REFERENCES Services(id)
-      );
-    `);
+            CREATE TABLE IF NOT EXISTS ServiceRequests (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                serviceId INTEGER,
+                serviceType TEXT,
+                name TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                email TEXT,
+                address TEXT NOT NULL,
+                description TEXT NOT NULL,
+                urgency TEXT DEFAULT 'normal',
+                preferredDate TEXT,
+                preferredTime TEXT,
+                status TEXT DEFAULT 'pending',
+                totalPrice REAL,
+                createdAt TEXT,
+                updatedAt TEXT,
+                FOREIGN KEY (serviceId) REFERENCES Services(id)
+            );
+        `);
 
         // Check if Services table is empty and seed initial data
-        const countResult = await db.getFirstAsync('SELECT COUNT(*) as count FROM Services;');
+        const countResult = await db.getFirstAsync(
+            'SELECT COUNT(*) as count FROM Services;',
+        );
         const count = countResult.count;
 
         if (count === 0) {
             const initialServices = [
-                { title: 'Electrical Repair', description: 'Fixing outlets, wiring, and lighting fixtures', price: 100.0 },
-                { title: 'Carpentry Work', description: 'Custom shelving, furniture, and wood repairs', price: 150.0 },
-                { title: 'Plumbing', description: 'Repairing leaks, installing faucets, and unclogging drains', price: 120.0 },
-                { title: 'General Repairs', description: 'Home maintenance, drywall fixes, and minor installations', price: 80.0 },
-                { title: 'Painting Services', description: 'Interior and exterior painting with high-quality finishes', price: 200.0 },
-                { title: 'Furniture Assembly', description: 'Assembling flat-pack furniture like IKEA products', price: 60.0 },
+                {
+                    title: 'Electrical Services',
+                    description:
+                        'Wiring, outlets, fixtures, and electrical repairs',
+                    price: 100.0,
+                },
+                {
+                    title: 'Carpentry Work',
+                    description: 'Custom furniture, shelving, and wood repairs',
+                    price: 150.0,
+                },
+                {
+                    title: 'Plumbing Services',
+                    description: 'Pipes, faucets, toilets, and leak repairs',
+                    price: 120.0,
+                },
+                {
+                    title: 'General Repairs',
+                    description:
+                        'Home maintenance, drywall fixes, and installations',
+                    price: 80.0,
+                },
+                {
+                    title: 'Painting Services',
+                    description:
+                        'Interior and exterior painting with quality finishes',
+                    price: 200.0,
+                },
+                {
+                    title: 'Fixture Installation',
+                    description:
+                        'Install lights, fans, shelving, and home fixtures',
+                    price: 60.0,
+                },
             ];
 
             for (const service of initialServices) {
                 await db.runAsync(
                     'INSERT INTO Services (title, description, price) VALUES (?, ?, ?);',
-                    [service.title, service.description, service.price]
+                    [service.title, service.description, service.price],
                 );
             }
-            console.log('Initial services seeded:', initialServices.length, 'services added');
+            console.log(
+                'Initial services seeded:',
+                initialServices.length,
+                'services added',
+            );
         } else {
             console.log('Services table already populated, count:', count);
         }
@@ -71,60 +115,140 @@ const getServices = async () => {
     }
 };
 
-// Add service to cart (ServiceRequests)
-const addToCart = async (serviceId, phoneNumber, billingAddress, shippingAddress) => {
+// Add service request
+const addServiceRequest = async (requestData) => {
     try {
-        const service = await db.getFirstAsync('SELECT price FROM Services WHERE id = ?;', [serviceId]);
-        if (!service) {
-            throw new Error('Service not found');
-        }
-        const price = service.price;
+        const {
+            serviceId,
+            serviceType,
+            name,
+            phone,
+            email,
+            address,
+            description,
+            urgency,
+            preferredDate,
+            preferredTime,
+            status,
+            createdAt,
+        } = requestData;
 
-        const createdAt = new Date().toISOString();
+        const updatedAt = new Date().toISOString();
+
         await db.runAsync(
-            'INSERT INTO ServiceRequests (serviceId, phoneNumber, billingAddress, shippingAddress, totalPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?);',
-            [serviceId, phoneNumber || '', billingAddress || '', shippingAddress || '', price, createdAt]
+            `
+            INSERT INTO ServiceRequests (
+                serviceId, serviceType, name, phone, email, address, 
+                description, urgency, preferredDate, preferredTime, 
+                status, createdAt, updatedAt
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        `,
+            [
+                serviceId,
+                serviceType,
+                name,
+                phone,
+                email || '',
+                address,
+                description,
+                urgency || 'normal',
+                preferredDate || '',
+                preferredTime || '',
+                status || 'pending',
+                createdAt,
+                updatedAt,
+            ],
         );
-        console.log('Service added to cart, serviceId:', serviceId);
+
+        console.log('Service request added successfully');
     } catch (error) {
-        console.error('Error adding to cart:', error);
+        console.error('Error adding service request:', error);
         throw error;
     }
 };
 
-// Get cart items
+// Get all service requests
+const getServiceRequests = async () => {
+    try {
+        const requests = await db.getAllAsync(`
+            SELECT * FROM ServiceRequests 
+            ORDER BY createdAt DESC;
+        `);
+        return requests;
+    } catch (error) {
+        console.error('Error fetching service requests:', error);
+        throw error;
+    }
+};
+
+// Update service request status
+const updateServiceRequestStatus = async (requestId, status) => {
+    try {
+        const updatedAt = new Date().toISOString();
+        await db.runAsync(
+            'UPDATE ServiceRequests SET status = ?, updatedAt = ? WHERE id = ?;',
+            [status, updatedAt, requestId],
+        );
+        console.log('Service request status updated:', requestId, status);
+    } catch (error) {
+        console.error('Error updating service request status:', error);
+        throw error;
+    }
+};
+
+// Delete service request
+const deleteServiceRequest = async (requestId) => {
+    try {
+        await db.runAsync('DELETE FROM ServiceRequests WHERE id = ?;', [
+            requestId,
+        ]);
+        console.log('Service request deleted:', requestId);
+    } catch (error) {
+        console.error('Error deleting service request:', error);
+        throw error;
+    }
+};
+
+// Legacy methods for backward compatibility
+const addToCart = async (
+    serviceId,
+    phoneNumber,
+    billingAddress,
+    shippingAddress,
+) => {
+    console.warn('addToCart is deprecated. Use addServiceRequest instead.');
+    // For backward compatibility, convert to new format
+    await addServiceRequest({
+        serviceId,
+        serviceType: 'Legacy Service',
+        name: 'Unknown',
+        phone: phoneNumber,
+        address: billingAddress,
+        description: 'Legacy cart item',
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+    });
+};
+
 const getCartItems = async () => {
-    try {
-        const cartItems = await db.getAllAsync(`
-      SELECT sr.id, sr.serviceId, sr.phoneNumber, sr.billingAddress, sr.shippingAddress, sr.totalPrice, sr.createdAt, s.title, s.description
-      FROM ServiceRequests sr
-      JOIN Services s ON sr.serviceId = s.id;
-    `);
-        return cartItems;
-    } catch (error) {
-        console.error('Error fetching cart items:', error);
-        throw error;
-    }
+    console.warn('getCartItems is deprecated. Use getServiceRequests instead.');
+    return await getServiceRequests();
 };
 
-// Remove item from cart
 const removeFromCart = async (itemId) => {
-    try {
-        await db.runAsync('DELETE FROM ServiceRequests WHERE id = ?;', [itemId]);
-        console.log('Item removed from cart, itemId:', itemId);
-    } catch (error) {
-        console.error('Error removing from cart:', error);
-        throw error;
-    }
+    console.warn(
+        'removeFromCart is deprecated. Use deleteServiceRequest instead.',
+    );
+    return await deleteServiceRequest(itemId);
 };
 
-// Clear cart
 const clearCart = async () => {
+    console.warn('clearCart is deprecated.');
     try {
         await db.runAsync('DELETE FROM ServiceRequests;');
-        console.log('Cart cleared');
+        console.log('All service requests cleared');
     } catch (error) {
-        console.error('Error clearing cart:', error);
+        console.error('Error clearing service requests:', error);
         throw error;
     }
 };
@@ -132,6 +256,11 @@ const clearCart = async () => {
 export default {
     initializeDatabase,
     getServices,
+    addServiceRequest,
+    getServiceRequests,
+    updateServiceRequestStatus,
+    deleteServiceRequest,
+    // Legacy methods for backward compatibility
     addToCart,
     getCartItems,
     removeFromCart,
