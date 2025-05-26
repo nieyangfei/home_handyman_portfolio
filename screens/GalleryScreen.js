@@ -118,38 +118,39 @@ export default function GalleryScreen({ navigation }) {
     };
 
     const CategoryFilter = () => (
-        <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.categoryFilter}
-            contentContainerStyle={styles.categoryFilterContent}
-        >
-            {categories.map((category) => (
-                <TouchableOpacity
-                    key={category}
-                    style={[
-                        styles.categoryButton,
-                        selectedCategory === category &&
-                            styles.categoryButtonActive,
-                        selectedCategory === category &&
-                            category !== 'All' && {
-                                backgroundColor: categoryColors[category],
-                            },
-                    ]}
-                    onPress={() => setSelectedCategory(category)}
-                >
-                    <Text
+        <View style={styles.categoryFilterContainer}>
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.categoryFilterContent}
+            >
+                {categories.map((category) => (
+                    <TouchableOpacity
+                        key={category}
                         style={[
-                            styles.categoryButtonText,
+                            styles.categoryButton,
                             selectedCategory === category &&
-                                styles.categoryButtonTextActive,
+                                styles.categoryButtonActive,
+                            selectedCategory === category &&
+                                category !== 'All' && {
+                                    backgroundColor: categoryColors[category],
+                                },
                         ]}
+                        onPress={() => setSelectedCategory(category)}
                     >
-                        {category}
-                    </Text>
-                </TouchableOpacity>
-            ))}
-        </ScrollView>
+                        <Text
+                            style={[
+                                styles.categoryButtonText,
+                                selectedCategory === category &&
+                                    styles.categoryButtonTextActive,
+                            ]}
+                        >
+                            {category}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+        </View>
     );
 
     const ProjectCard = ({ project }) => (
@@ -431,12 +432,15 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     categoryButton: {
-        paddingHorizontal: 20,
-        paddingVertical: 8,
-        borderRadius: 20,
+        paddingHorizontal: 16,
+        paddingVertical: 6, // Reduced from 8 to 6
+        borderRadius: 16, // Slightly smaller radius to match
         backgroundColor: '#fff',
         borderWidth: 1,
         borderColor: '#ddd',
+        minHeight: 32, // Set a fixed minimum height
+        justifyContent: 'center', // Center the text vertically
+        alignItems: 'center', // Center the text horizontally
     },
     categoryButtonActive: {
         backgroundColor: '#FF6B35',
@@ -446,6 +450,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         fontWeight: '500',
+        textAlign: 'center', // Ensure text is centered
+        lineHeight: 16, // Control line height to prevent extra space
     },
     categoryButtonTextActive: {
         color: '#fff',
