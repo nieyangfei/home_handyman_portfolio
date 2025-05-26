@@ -1,6 +1,25 @@
-# Professional Handyman Portfolio App
+# Professional Handyman Portfolio App - COMP-5450-SA Mobile Programming
 
 A modern React Native mobile application designed as a Portfolio for a Professional Home Handyman to showcase their services, manage client inquiries, and build their business presence.
+
+Project available at [GitHub](https://github.com/nieyangfei/home_handyman_portfolio/tree/revamp-app) under the `revamp-app` branch.
+
+## Group 5 Members
+
+| Student Number | Name                              | Email                        |
+|----------------|-----------------------------------|------------------------------|
+| 1254452        | Ndruzi, Benjamin                  | bndruzi@lakeheadu.ca         |
+| 1291151        | Nie, Yangfei                      | ynie3@lakeheadu.ca           |
+| 1277515        | Pallala, Deekshitha               | dpallala@lakeheadu.ca        |
+| 1254890        | Di, Pan                           | dpan3@lakeheadu.ca           |
+| 1273103        | Panchal, Sanskar Umangkumar       | spancha4@lakeheadu.ca        |
+| 1276570        | Panchal, Vinit Dharmendrakumar    | vpanch16@lakeheadu.ca        |
+| 1265943        | Pancholi, Jinal Brijesh           | jpanchol@lakeheadu.ca        |
+| 1276687        | Pandya, Shrey Paragkumar          | spandya5@lakeheadu.ca        |
+| 1277405        | Pandya, Shubham Bhupendrakumar    | spandya6@lakeheadu.ca        |
+| 1266909        | Parmar, Shrey Yogeshbhai          | sparma11@lakeheadu.ca        |
+| 1260534        | Patange, Tulsi                    | tpatange@lakeheadu.ca        |
+
 
 ## 📱 Features
 
