@@ -30,6 +30,16 @@ const initializeDatabase = async () => {
       );
     `);
 
+        // Create Testimonials table
+        await db.execAsync(`
+            CREATE TABLE IF NOT EXISTS Testimonials (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                quote TEXT NOT NULL,
+                service TEXT
+            );
+        `);
+
         // Check if Services table is empty and seed initial data
         const countResult = await db.getFirstAsync('SELECT COUNT(*) as count FROM Services;');
         const count = countResult.count;
@@ -53,6 +63,66 @@ const initializeDatabase = async () => {
             console.log('Initial services seeded:', initialServices.length, 'services added');
         } else {
             console.log('Services table already populated, count:', count);
+        }
+
+        // Check and seed Testimonials
+        const testimonialsCount = await db.getFirstAsync('SELECT COUNT(*) as count FROM Testimonials;');
+        if (testimonialsCount.count === 0) {
+            const initialTestimonials = [
+                {
+                    name: "Jane Smith",
+                    quote: "John was prompt, professional, and did an outstanding job!",
+                    service: "General Repairs"
+                },
+                {
+                    name: "Mike Johnson",
+                    quote: "Excellent attention to detail and really great communication!",
+                    service: "Carpentry"
+                },
+                {
+                    name: "Ava Lee",
+                    quote: "Transformed our space beautifully — will definitely hire again.",
+                    service: "Painting Services"
+                },
+                {
+                    name: "Carlos Ramirez",
+                    quote: "Best handyman experience I've had in years. Highly recommend!",
+                    service: "Electrical"
+                },
+                {
+                    name: "Priya Patel",
+                    quote: "Clean, quick, and super reliable. Thank you!",
+                    service: "Plumbing"
+                },
+                {
+                    name: "Sarah M.",
+                    quote: "John fixed our electrical issue that 3 other contractors couldn't solve. His creative approach saved us thousands!",
+                    service: "Electrical"
+                },
+                {
+                    name: "Mike R.",
+                    quote: "Punctual, professional, and reasonably priced. Built our custom shelving perfectly to fit the space.",
+                    service: "Carpentry"
+                },
+                {
+                    name: "Lisa K.",
+                    quote: "Transparent pricing from the start. No surprises, just quality work delivered on time.",
+                    service: "General Repairs"
+                },
+                {
+                    name: "Tom W.",
+                    quote: "Been using John for 2 years now. Always reliable, always does it right the first time.",
+                    service: "Plumbing"
+                }
+            ];
+
+            for (const testimonial of initialTestimonials) {
+                await db.runAsync(
+                    'INSERT INTO Testimonials (name, quote, service) VALUES (?, ?, ?);',
+                    [testimonial.name, testimonial.quote, testimonial.service]
+                );
+            }
+            console.log('Initial testimonials seeded:', initialTestimonials.length, 'testimonials added');
         }
     } catch (error) {
         console.error('Error initializing database:', error);
@@ -154,28 +224,15 @@ export const getPortfolioItems = () => [
     },
 ];
 
-export const getTestimonials = () => [
-    {
-        name: "Jane Smith",
-        quote: "John was prompt, professional, and did an outstanding job!"
-    },
-    {
-        name: "Mike Johnson",
-        quote: "Excellent attention to detail and really great communication!"
-    },
-    {
-        name: "Ava Lee",
-        quote: "Transformed our space beautifully — will definitely hire again."
-    },
-    {
-        name: "Carlos Ramirez",
-        quote: "Best handyman experience I’ve had in years. Highly recommend!"
-    },
-    {
-        name: "Priya Patel",
-        quote: "Clean, quick, and super reliable. Thank you!"
-    },
-];
+export const getTestimonials = async () => {
+    try {
+        const testimonials = await db.getAllAsync('SELECT * FROM Testimonials;');
+        return testimonials;
+    } catch (error) {
+        console.error('Error fetching testimonials:', error);
+        throw error;
+    }
+}
 
 export default {
     initializeDatabase,
