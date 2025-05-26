@@ -1,10 +1,11 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import {
   ScrollView, View, Text, ImageBackground, Image, StyleSheet,
   Dimensions, TouchableOpacity, Pressable, Alert
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Database from "../database/Database";
 
 const { width } = Dimensions.get('window');
 
@@ -20,6 +21,10 @@ const galleryImages = [
 ];
 
 export default function HomeScreen({ navigation }) {
+  useEffect(() => {
+    Database.initializeDatabase();
+  }, []);
+
   const nav = useNavigation();
 
   const handleLogout = () => {
